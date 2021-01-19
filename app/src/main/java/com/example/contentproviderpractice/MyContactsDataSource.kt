@@ -4,6 +4,7 @@ import android.content.ContentResolver
 import android.content.ContentUris
 import android.net.Uri
 import android.provider.ContactsContract // 기기의 주소록 애플리케이션에서 표시되는 데이터의 출처
+import android.util.Log
 
 class MyContactsDataSource(private val contentResolver: ContentResolver) {
     fun fetchContacts(): List<MyContact> {
@@ -38,6 +39,7 @@ class MyContactsDataSource(private val contentResolver: ContentResolver) {
             cursor.close()
         }
 
+        Log.d("cccccccc", "@DataSource - result is returned + its size is " + result.size)
         return result.toList()
     }
 
