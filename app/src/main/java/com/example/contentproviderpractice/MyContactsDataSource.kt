@@ -39,7 +39,6 @@ class MyContactsDataSource(private val contentResolver: ContentResolver) {
             cursor.close()
         }
 
-        Log.d("cccccccc", "@DataSource - result is returned + its size is " + result.size)
         return result.toList()
     }
 

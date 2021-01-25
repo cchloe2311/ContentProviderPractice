@@ -5,7 +5,6 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -18,8 +17,6 @@ class MainActivity : AppCompatActivity() {
 
     private val adapter = MyContactsAdapter()
     private lateinit var viewModel: MainViewModel
-
-    private val PERMISSIONS_REQUEST_READ_CONTACTS = 1001;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,8 +46,7 @@ class MainActivity : AppCompatActivity() {
         parentView.layoutManager = LinearLayoutManager(this)
         parentView.adapter = adapter
         viewModel.myContacts.observe(this, Observer {
-            adapter.submitList(it)
-            Log.d("cccccccc", "@Activity - Obserced muContacts's changing")
+            adapter.submitList(it) // diffing 작업과 list 변경 작업 진행 - DiffUtil
         })
     }
 }
