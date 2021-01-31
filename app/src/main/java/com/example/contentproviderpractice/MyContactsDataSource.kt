@@ -7,6 +7,9 @@ import android.provider.ContactsContract // 기기의 주소록 애플리케이�
 import android.util.Log
 
 class MyContactsDataSource(private val contentResolver: ContentResolver) {
+
+    // 별도의 스레드에서 비동기식으로 쿼리를 실행해야 함
+    // -> 보통 CursorLoader 클래스를 사용, 여기서는 코루틴 사용
     fun fetchContacts(): List<MyContact> {
         val result: MutableList<MyContact> = mutableListOf()
 
@@ -25,7 +28,10 @@ class MyContactsDataSource(private val contentResolver: ContentResolver) {
             null, // selection에서 ? 로 표시 곳에 들어갈 데이터
             ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME // order by
         )
-        cursor?.let {
+
+        // 쿼리 프로젝션이 지정한 열을 포함하는 Cursor를 반환
+        // (Cursor는 행의 목록)
+       cursor?.let {
             cursor.moveToFirst()
             while (!cursor.isAfterLast) {
                 result.add(
